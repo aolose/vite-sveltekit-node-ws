@@ -64,7 +64,7 @@ function WsPlugin() {
         name: 'svelte-kit-websocket',
         async transform(code, id) {
             if (id.endsWith('@sveltejs/kit/src/runtime/server/index.js')) {
-                const rep = `import {handle} from 'vite-sveltekit-cf-ws';\nhandle();`
+                const rep = `import {handle} from 'vite-sveltekit-node-ws';\nhandle();`
                 return {code: code.replace(/([\s\S]*import.*?from.*?('|").*?\2;\n)/, `$1${rep}`)}
             }
             return null;

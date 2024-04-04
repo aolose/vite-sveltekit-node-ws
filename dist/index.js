@@ -1,35 +1,35 @@
 import h from "http";
-import m from "https";
-import { getEventListeners as d } from "events";
+import d from "https";
+import { getEventListeners as m } from "events";
 let e, n;
-const f = [], a = (r) => {
+const a = [], f = (r) => {
   const t = r.createServer;
-  f.push([t, r]), r.createServer = function(...s) {
-    return f.forEach(([o, c]) => {
-      c.createServer = o;
+  a.push([t, r]), r.createServer = function(...s) {
+    return a.forEach(([o, i]) => {
+      i.createServer = o;
     }), e = t.call(this, ...s), n && n(e), e;
   };
 }, E = () => {
-  e || (a(h), a(m));
+  e || (f(h), f(d));
 }, p = (r) => {
   if (e = r.httpServer, console.log("srv", !!e), !e)
     return;
-  const t = e.on, s = d(e, "upgrade");
-  e.on = function(o, c) {
+  const t = e.on, s = m(e, "upgrade");
+  e.on = function(o, i) {
     if (o === "upgrade") {
-      this == null || this.removeAllListeners("upgrade"), t.call(this, "upgrade", (i, l, u) => {
-        i.url === "/" ? s.forEach((v) => v.call(this, i, l, u)) : c.call(this, i, l, u);
+      this == null || this.removeAllListeners("upgrade"), t.call(this, "upgrade", (c, l, u) => {
+        c.url === "/" ? s.forEach((v) => v.call(this, c, l, u)) : i.call(this, c, l, u);
       });
       return;
     }
-    t.call(this, o, c);
+    t.call(this, o, i);
   }, n && n(e);
 };
 function b() {
   return {
     name: "svelte-kit-websocket",
     async transform(r, t) {
-      return t.endsWith("@sveltejs/kit/src/runtime/server/index.js") ? { code: r.replace(/([\s\S]*import.*?from.*?('|").*?\2;\n)/, `$1import {handle} from 'vite-sveltekit-cf-ws';
+      return t.endsWith("@sveltejs/kit/src/runtime/server/index.js") ? { code: r.replace(/([\s\S]*import.*?from.*?('|").*?\2;\n)/, `$1import {handle} from 'vite-sveltekit-node-ws';
 handle();`) } : null;
     },
     configurePreviewServer: p,
