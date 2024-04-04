@@ -1,0 +1,34 @@
+{
+	"name": "vite-sveltekit-node-ws",
+	"version": "0.0.1",
+	"description": "",
+	"author": "Aolose",
+	"type": "module",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"files": [
+		"dist",
+		"README.md"
+	],
+	"scripts": {
+		"build": "vite build"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20240329.0",
+		"@types/node": "^20.12.2",
+		"vite": "^5.1.5",
+		"vite-plugin-dts": "^3.8.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/aolose/vite-sveltekit-cf-node.git"
+	}
+}
