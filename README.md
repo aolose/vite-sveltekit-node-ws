@@ -15,7 +15,7 @@ If you use it like `new WebsocketServer({server:httpServer})`, there will be som
 
 Since I'm new to Vite's ViteDevServer and PreviewServer, I don't know what it does with httpserver.
 
-Anyway you still can use it like blow.
+Anyway, you can still use it like below.
 
 
 
