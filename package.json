@@ -22,7 +22,6 @@
 		"build": "vite build"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20240329.0",
 		"@types/node": "^20.12.2",
 		"vite": "^5.1.5",
 		"vite-plugin-dts": "^3.8.1"
