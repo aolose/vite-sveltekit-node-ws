@@ -1,5 +1,9 @@
 # vite-sveltekit-node-ws
 
+This plugin just exposes httpServer. In theory, you can use any websocket framework you like.
+
+[demo with socket.io](https://github.com/aolose/sk-node-ws-demo)
+
 ### Support 
 - dev 
 - preview 
