@@ -43,7 +43,7 @@ function WsPlugin(hrmPort?: number) {
         config(cfg) {
             const s = cfg.server = cfg.server || {}
             if (s.hmr === true || !s.hmr) s.hmr = {}
-            s.hmr.port = hrmPort || ((s.port || 57777) + 1)
+            s.hmr.port = hrmPort || s.port + 1 || 57777
         },
         async transform(code, id) {
             if (id.endsWith('@sveltejs/kit/src/runtime/server/index.js')) {
