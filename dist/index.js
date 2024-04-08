@@ -1,46 +1,38 @@
-import h from "http";
-import d from "https";
-import { getEventListeners as m } from "events";
-let e, n;
-const a = [], f = (r) => {
-  const t = r.createServer;
-  a.push([t, r]), r.createServer = function(...s) {
-    return a.forEach(([o, i]) => {
-      i.createServer = o;
-    }), e = t.call(this, ...s), n && n(e), e;
+import l from "http";
+import u from "https";
+let n, s;
+const i = [], c = (e) => {
+  const t = e.createServer;
+  i.push([t, e]), e.createServer = function(...r) {
+    return i.forEach(([o, f]) => {
+      f.createServer = o;
+    }), n = t.call(this, ...r), s && s(n), n;
   };
-}, E = () => {
-  e || (f(h), f(d));
-}, p = (r) => {
-  if (e = r.httpServer, console.log("srv", !!e), !e)
-    return;
-  const t = e.on, s = m(e, "upgrade");
-  e.on = function(o, i) {
-    if (o === "upgrade") {
-      this == null || this.removeAllListeners("upgrade"), t.call(this, "upgrade", (c, l, u) => {
-        c.url === "/" ? s.forEach((v) => v.call(this, c, l, u)) : i.call(this, c, l, u);
-      });
-      return;
-    }
-    t.call(this, o, i);
-  }, n && n(e);
+}, p = () => {
+  n || (c(l), c(u));
+}, v = (e) => {
+  n = e.httpServer;
 };
-function b() {
+function a(e) {
   return {
     name: "svelte-kit-websocket",
-    async transform(r, t) {
-      return t.endsWith("@sveltejs/kit/src/runtime/server/index.js") ? { code: r.replace(/([\s\S]*import.*?from.*?('|").*?\2;\n)/, `$1import {handle} from 'vite-sveltekit-node-ws';
+    config(t) {
+      const r = t.server = t.server || {};
+      (r.hmr === !0 || !r.hmr) && (r.hmr = {}), r.hmr.port = e || (r.port || 57777) + 1;
+    },
+    async transform(t, r) {
+      return r.endsWith("@sveltejs/kit/src/runtime/server/index.js") ? { code: t.replace(/([\s\S]*import.*?from.*?('|").*?\2;\n)/, `$1import {handle} from 'vite-sveltekit-node-ws';
 handle();`) } : null;
     },
-    configurePreviewServer: p,
-    configureServer: p
+    configurePreviewServer: v,
+    configureServer: v
   };
 }
-const j = (r) => {
-  e ? r(e) : n = r;
+const d = (e) => {
+  n ? e(n) : s = e;
 };
 export {
-  b as default,
-  E as handle,
-  j as server
+  a as default,
+  p as handle,
+  d as useServer
 };

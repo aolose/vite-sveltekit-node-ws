@@ -3,6 +3,7 @@ import { default as default_3 } from 'https';
 import { default as default_4 } from 'http2';
 import { PreviewServer } from 'vite';
 import { TransformPluginContext } from 'rollup';
+import { UserConfig } from 'vite';
 import { ViteDevServer } from 'vite';
 
 declare type CreateServer = Http['createServer'];
@@ -13,10 +14,11 @@ declare type Http = typeof default_2 | typeof default_3 | typeof default_4;
 
 declare type Server = ReturnType<CreateServer>;
 
-export declare const server: (get: (server: Server) => void) => void;
+export declare const useServer: (callback: (server: Server) => void) => void;
 
-declare function WsPlugin(): {
+declare function WsPlugin(hrmPort?: number): {
     name: string;
+    config(this: void, cfg: UserConfig): void;
     transform(this: TransformPluginContext, code: string, id: string): Promise<{
         code: string;
     } | null>;

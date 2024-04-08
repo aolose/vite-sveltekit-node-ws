@@ -35,33 +35,16 @@ const handle = () => {
 
 const devHandle = (server: ViteDevServer | PreviewServer) => {
     srv = server.httpServer
-    console.log('srv', !!srv)
-    if (!srv) return
-    const on = srv.on
-    type args = Parameters<typeof on>
-    // @ts-ignore
-    const up = getEventListeners(srv, 'upgrade')
-    // @ts-ignore
-    srv.on = function (name: args[0], listener: args[1]) {
-        if (name === 'upgrade') {
-            this?.removeAllListeners('upgrade')
-            // @ts-ignore
-            on.call(this, 'upgrade', (req, socket, head) => {
-                const url = req.url
-                if (url === '/') up.forEach(a => a.call(this, req, socket, head))
-                else listener.call(this, req, socket, head)
-            })
-            return
-        }
-        // @ts-ignore
-        on.call(this, name, listener)
-    }
-    if (cb) cb(srv)
 }
 
-function WsPlugin() {
+function WsPlugin(hrmPort?: number) {
     return {
         name: 'svelte-kit-websocket',
+        config(cfg) {
+            const s = cfg.server = cfg.server || {}
+            if (s.hmr === true || !s.hmr) s.hmr = {}
+            s.hmr.port = hrmPort || ((s.port || 57777) + 1)
+        },
         async transform(code, id) {
             if (id.endsWith('@sveltejs/kit/src/runtime/server/index.js')) {
                 const rep = `import {handle} from 'vite-sveltekit-node-ws';\nhandle();`
@@ -74,10 +57,10 @@ function WsPlugin() {
     } satisfies Plugin;
 }
 
-const server = (get: (server: Server) => void) => {
-    if (srv) get(srv)
-    else cb = get
+const useServer = (callback: (server: Server) => void) => {
+    if (srv) callback(srv)
+    else cb = callback
 }
 
-export {server, handle};
+export {useServer, handle};
 export default WsPlugin;
