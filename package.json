@@ -1,6 +1,6 @@
 {
 	"name": "vite-sveltekit-node-ws",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "",
 	"author": "Aolose",
 	"type": "module",
@@ -29,5 +29,6 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/aolose/vite-sveltekit-cf-node.git"
-	}
+	},
+	"keywords": ["sveltekit","websocket"]
 }
