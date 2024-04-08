@@ -39,7 +39,7 @@ const devHandle = (server: ViteDevServer | PreviewServer) => {
 
 function WsPlugin(hrmPort?: number) {
     return {
-        name: 'svelte-kit-websocket',
+        name: 'vite-sveltekit-node-ws',
         config(cfg) {
             const s = cfg.server = cfg.server || {}
             if (s.hmr === true || !s.hmr) s.hmr = {}
