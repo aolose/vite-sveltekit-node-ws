@@ -37,6 +37,10 @@ useServer((server) => {
             a.send(`echo: ${e}`)
         })
     })
+},(url:string)=>{
+    // You can block some requests to prevent them from being processed by SveltetKit
+    // return (url.startWidth('hello'))
+    return false
 })
 
 ```

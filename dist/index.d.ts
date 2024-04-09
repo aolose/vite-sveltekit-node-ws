@@ -14,7 +14,9 @@ declare type Http = typeof default_2 | typeof default_3 | typeof default_4;
 
 declare type Server = ReturnType<CreateServer>;
 
-export declare const useServer: (callback: (server: Server) => void) => void;
+declare let skipPath: ((url: string) => boolean) | undefined;
+
+export declare const useServer: (callback: (server: Server) => void, skip?: typeof skipPath) => void;
 
 declare function WsPlugin(hrmPort?: number): {
     name: string;
