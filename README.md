@@ -1,13 +1,13 @@
 # vite-sveltekit-node-ws
 
-This plugin just exposes httpServer. In theory, you can use any websocket framework you like.
+This plugin just exposes httpServer without any dependencies. In theory, you can use any websocket framework you like.
 
-[demo with socket.io](https://github.com/aolose/sk-node-ws-demo)
+[Try it with socket.io](https://github.com/aolose/sk-node-ws-demo)
 
 ### Support 
 - dev 
 - preview 
-- online?
+- online
 
 ### Usage
 
@@ -54,3 +54,5 @@ hrmPort
 import ws from 'vite-sveltekit-node-ws';
 ws(9999)
 ```
+
+
