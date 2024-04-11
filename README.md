@@ -38,6 +38,7 @@ useServer((server) => {
         })
     })
 },(url:string)=>{
+    // It is optional 
     // You can block some requests to prevent them from being processed by SveltetKit
     // return (url.startWidth('hello'))
     return false
@@ -45,14 +46,22 @@ useServer((server) => {
 
 ```
 
-### Config
+### API
 
-hrmPort
-- type: number | undefined
-- Specify the port of hrm
 ```ts
-import ws from 'vite-sveltekit-node-ws';
-ws(9999)
+import wsPlugin, {useServer} from "vite-sveltekit-node-ws";
 ```
+
+### wsPlugin(port?: number)
+- port: Specify the port of hrm in vite config
+
+### useServer(serverHandle, pathHandle?)
+```ts
+serverHandle: ( server ) => void
+pathHandle?:  ( pathname: string ) => boolean 
+```
+- server : the httpServer from Polka(production mode) or from Vite(development.preview mode)
+- pathHandle: return true if the request no need to be handled by sveltekit
+- pathname: the request's pathname
 
 
