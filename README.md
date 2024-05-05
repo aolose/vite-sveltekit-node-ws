@@ -37,10 +37,10 @@ useServer((server) => {
             a.send(`echo: ${e}`)
         })
     })
-},(url:string)=>{
+},(pathname:string)=>{
     // It is optional 
     // You can block some requests to prevent them from being processed by SveltetKit
-    // return url.startsWith('hello')
+    // return pathname.startsWith('/hello')
     return false
 })
 
