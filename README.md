@@ -40,7 +40,7 @@ useServer((server) => {
 },(url:string)=>{
     // It is optional 
     // You can block some requests to prevent them from being processed by SveltetKit
-    // return (url.startsWith('hello'))
+    // return url.startsWith('hello')
     return false
 })
 
