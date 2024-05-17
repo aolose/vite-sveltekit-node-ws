@@ -1,54 +1,74 @@
-import m from "http";
-import v from "https";
-let n, i, l, s;
-const d = (e) => {
-  const t = e.on;
-  e.on = function(...r) {
-    r[0] === "request" ? (t.call(this, "request", function(o, p) {
-      S(o.url) || r[1].call(this, o, p);
-    }), s = () => {
-      e.on = t;
-    }) : t.call(this, ...r);
-  };
-}, S = (e) => {
-  if (!(!e || !l))
-    return l(new URL(e, "http://a.a").pathname);
-}, a = [], u = (e) => {
-  const t = e.createServer;
-  a.push([t, e]), e.createServer = function(...r) {
-    return a.forEach(([c, o]) => {
-      o.createServer = c;
-    }), n = t.call(this, ...r), d(n), f(), n;
-  };
-}, f = () => {
-  n && i && setTimeout(() => {
-    s == null || s(), i(n);
-  });
-}, j = () => {
-  n || (u(m), u(v));
-}, h = (e) => {
-  n = e.httpServer;
+import d from "http";
+import b from "https";
+const p = () => c ? global.httpSrv : m, v = (e) => {
+  e && (c ? global.httpSrv = e : m = e);
 };
-function x(e) {
-  return {
+let c = !1, m, i, a, l;
+const k = (e) => {
+  const r = e.on;
+  e.on = function(...n) {
+    n[0] === "request" ? (r.call(this, "request", function(t, s) {
+      g(t.url) || n[1].call(this, t, s);
+    }), l = () => {
+      e.on = r;
+    }) : r.call(this, ...n);
+  };
+}, g = (e) => {
+  if (!(!e || !a))
+    return a(new URL(e, "http://a.a").pathname);
+}, f = [], u = (e) => {
+  const r = e.createServer;
+  f.push([r, e]), e.createServer = function(...n) {
+    f.forEach(([t, s]) => {
+      s.createServer = t;
+    });
+    const o = r.call(this, ...n);
+    return v(o), k(o), S(), o;
+  };
+}, S = () => {
+  const e = p();
+  e && i && setTimeout(() => {
+    l == null || l(), i(e);
+  });
+}, G = () => {
+  p() || (u(d), u(b));
+}, h = (e) => {
+  v(e.httpServer);
+};
+function P({
+  hmrPort: e,
+  buildModification: r = `import {handle} from 'vite-sveltekit-node-ws';
+handle();`,
+  global: n = !1
+} = {}) {
+  return c = n, {
     name: "vite-sveltekit-node-ws",
-    config(t) {
-      const r = t.server = t.server || {};
-      (r.hmr === !0 || !r.hmr) && (r.hmr = {}), r.hmr.port = e || (r.port || 57777) + 1;
+    config(o) {
+      if (e === !1)
+        return;
+      const t = o.server = o.server || {};
+      (t.hmr === !0 || !t.hmr) && (t.hmr = {}), t.hmr.port = e || (t.port || 57777) + 1;
     },
-    async transform(t, r) {
-      return r.endsWith("@sveltejs/kit/src/runtime/server/index.js") ? { code: t.replace(/([\s\S]*import.*?from.*?(['"]).*?\2;\n)/, `$1import {handle} from 'vite-sveltekit-node-ws';
-handle();`) } : null;
+    async transform(o, t) {
+      if (t.endsWith("@sveltejs/kit/src/runtime/server/index.js")) {
+        const s = r;
+        return { code: o.replace(/([\s\S]*import.*?from.*?(['"]).*?\2;\n)/, `$1${s}`) };
+      }
+      return null;
     },
     configurePreviewServer: h,
     configureServer: h
   };
 }
-const P = (e, t) => {
-  l = t, i = e, f();
+const j = ({
+  callback: e,
+  skip: r,
+  global: n = !1
+}) => {
+  c = n, a = r, i = e, S();
 };
 export {
-  x as default,
-  j as handle,
-  P as useServer
+  P as default,
+  G as handle,
+  j as useServer
 };

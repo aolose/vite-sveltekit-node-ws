@@ -16,9 +16,17 @@ declare type Server = ReturnType<CreateServer>;
 
 declare let skipPath: ((url: string) => boolean) | undefined;
 
-export declare const useServer: (callback: (server: Server) => void, skip?: typeof skipPath) => void;
+export declare const useServer: ({ callback, skip, global }: {
+    callback: (server: Server) => void;
+    skip?: typeof skipPath;
+    global?: boolean;
+}) => void;
 
-declare function WsPlugin(hrmPort?: number): {
+declare function WsPlugin({ hmrPort, buildModification, global }?: {
+    hmrPort?: number | false;
+    buildModification?: string;
+    global?: boolean;
+}): {
     name: string;
     config(this: void, cfg: UserConfig): void;
     transform(this: TransformPluginContext, code: string, id: string): Promise<{

@@ -19,7 +19,7 @@ import { defineConfig } from 'vitest/config';
 import ws from 'vite-sveltekit-node-ws';
 
 export default defineConfig({
-    plugins: [sveltekit(), ws()]
+    plugins: [sveltekit(), ws({global: true})]
 });
 
 ```
@@ -30,19 +30,22 @@ hooks.server.ts
 import {useServer} from "vite-sveltekit-node-ws";
 import {WebSocketServer} from 'ws'
 
-useServer((server) => {
-    const ss = new WebSocketServer({server})
-    ss.on('connection',a=>{
-        a.on('message',e=>{
-            a.send(`echo: ${e}`)
+useServer({
+    global: true, //This is optional, uses global namespace rather than local namespace
+    callback: (server) => {
+        const ss = new WebSocketServer({server})
+        ss.on('connection',a=>{
+            a.on('message',e=>{
+                a.send(`echo: ${e}`)
+            })
         })
-    })
-},(pathname:string)=>{
-    // It is optional 
-    // You can block some requests to prevent them from being processed by SveltetKit
-    // return pathname.startsWith('/hello')
-    return false
-})
+    },
+    skip: (pathname:string)=>{
+        // It is optional 
+        // You can block some requests to prevent them from being processed by SveltetKit
+        // return pathname.startsWith('/hello')
+        return false
+    }})
 
 ```
 
@@ -52,10 +55,12 @@ useServer((server) => {
 import wsPlugin, {useServer} from "vite-sveltekit-node-ws";
 ```
 
-### wsPlugin(port?: number)
-- port: Specify the port of hrm in vite config
+### wsPlugin({hmrPort?: number | false; buildModification?: string; global?: boolean; })
+- hmrPort: Specify the port of hmr in vite config. If set to false, then no port modifications will be done
+- global: Sets the httpServer that the ws server is connected to to be in the global namespace rather than local.
+- buildModifiation: Sets the modification to the index file. Not requierd to be set.
 
-### useServer(serverHandle, pathHandle?)
+### useServer({callback: serverHandle, skip: pathHandle?, global?: boolean})
 ```ts
 serverHandle: ( server ) => void
 pathHandle?:  ( pathname: string ) => boolean 
@@ -63,5 +68,6 @@ pathHandle?:  ( pathname: string ) => boolean
 - server : the httpServer from Polka(production mode) or from Vite(development.preview mode)
 - pathHandle: return true if the request no need to be handled by sveltekit
 - pathname: the request's pathname
+- global: sets the request to use the global namespace. Should be set to the same as wsPlugin.
 
 
