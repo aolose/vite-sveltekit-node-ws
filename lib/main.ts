@@ -89,7 +89,10 @@ const check = () => {
 	}
 };
 
-const handle = () => {
+const handle = (data? : {global: boolean}) => {
+    if(data){
+        useGlobal = data.global
+    }
 	if (getHTTPServerGlobal()) return;
 	hack(http);
 	hack(https);
