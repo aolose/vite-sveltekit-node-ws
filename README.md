@@ -1,4 +1,6 @@
-# vite-sveltekit-node-ws
+# vite-sveltekit-node-ws-global
+
+NOTE: THis is a modified version of vite-sveltekit-node-ws with some custom changes. Once (or if) those changes are merged into the master repository this one will be removed.
 
 This plugin just exposes httpServer without any dependencies. In theory, you can use any websocket framework you like.
 

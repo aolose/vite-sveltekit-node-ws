@@ -1,6 +1,6 @@
 {
-	"name": "vite-sveltekit-node-ws",
-	"version": "0.0.7",
+	"name": "vite-sveltekit-node-ws-global",
+	"version": "0.0.1",
 	"description": "",
 	"author": "Aolose",
 	"type": "module",
