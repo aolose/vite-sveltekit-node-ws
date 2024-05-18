@@ -76,14 +76,9 @@ const devHandle = (server: ViteDevServer | PreviewServer) => {
     srv = server.httpServer
 }
 
-function WsPlugin(hrmPort?: number) {
+function WsPlugin() {
     return {
         name: 'vite-sveltekit-node-ws',
-        config(cfg) {
-            const s = cfg.server = cfg.server || {}
-            if (s.hmr === true || !s.hmr) s.hmr = {}
-            s.hmr.port = hrmPort || (s.port || 57777) + 1
-        },
         async transform(code, id) {
             if (id.endsWith('@sveltejs/kit/src/runtime/server/index.js')) {
                 const rep = `import {handle} from 'vite-sveltekit-node-ws';\nhandle();`

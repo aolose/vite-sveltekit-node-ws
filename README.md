@@ -4,6 +4,18 @@ This plugin just exposes httpServer without any dependencies. In theory, you can
 
 [Try it with socket.io](https://github.com/aolose/sk-node-ws-demo)
 
+Notice: for [ws](https://github.com/websockets/ws) user, You may encounter the error `RangeError: Invalid WebSocket frame: invalid status code xxxx`,
+To avoid this error, specify a different port.
+```ts
+//vite.config.ts
+export default defineConfig({
+    plugins: [sveltekit(),ws()],
+    server:{
+        hmr:{port:5678}
+    }
+});
+```
+
 ### Support 
 - dev 
 - preview 
@@ -51,9 +63,6 @@ useServer((server) => {
 ```ts
 import wsPlugin, {useServer} from "vite-sveltekit-node-ws";
 ```
-
-### wsPlugin(port?: number)
-- port: Specify the port of hrm in vite config
 
 ### useServer(serverHandle, pathHandle?)
 ```ts

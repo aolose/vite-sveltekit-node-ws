@@ -3,7 +3,6 @@ import { default as default_3 } from 'https';
 import { default as default_4 } from 'http2';
 import { PreviewServer } from 'vite';
 import { TransformPluginContext } from 'rollup';
-import { UserConfig } from 'vite';
 import { ViteDevServer } from 'vite';
 
 declare type CreateServer = Http['createServer'];
@@ -18,9 +17,8 @@ declare let skipPath: ((url: string) => boolean) | undefined;
 
 export declare const useServer: (callback: (server: Server) => void, skip?: typeof skipPath) => void;
 
-declare function WsPlugin(hrmPort?: number): {
+declare function WsPlugin(): {
     name: string;
-    config(this: void, cfg: UserConfig): void;
     transform(this: TransformPluginContext, code: string, id: string): Promise<{
         code: string;
     } | null>;
